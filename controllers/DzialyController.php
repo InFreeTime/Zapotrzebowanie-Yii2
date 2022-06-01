@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Opiniujacy;
-use app\models\OpiniujacySearch;
+use app\models\Dzialy;
+use app\models\DzialySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OpiniujacyController implements the CRUD actions for Opiniujacy model.
+ * DzialyController implements the CRUD actions for Dzialy model.
  */
-class OpiniujacyController extends Controller
+class DzialyController extends Controller
 {
     /**
      * @inheritDoc
@@ -44,12 +44,13 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Lists all Opiniujacy models.
-     * @return mixed
+     * Lists all Dzialy models.
+     *
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new OpiniujacySearch();
+        $searchModel = new DzialySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,9 +60,9 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Displays a single Opiniujacy model.
+     * Displays a single Dzialy model.
      * @param int $id ID
-     * @return mixed
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
@@ -72,13 +73,13 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Creates a new Opiniujacy model.
+     * Creates a new Dzialy model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Opiniujacy();
+        $model = new Dzialy();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -94,10 +95,10 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Updates an existing Opiniujacy model.
+     * Updates an existing Dzialy model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return mixed
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
@@ -114,10 +115,10 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Deletes an existing Opiniujacy model.
+     * Deletes an existing Dzialy model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return mixed
+     * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
@@ -128,15 +129,15 @@ class OpiniujacyController extends Controller
     }
 
     /**
-     * Finds the Opiniujacy model based on its primary key value.
+     * Finds the Dzialy model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Opiniujacy the loaded model
+     * @return Dzialy the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Opiniujacy::findOne($id)) !== null) {
+        if (($model = Dzialy::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

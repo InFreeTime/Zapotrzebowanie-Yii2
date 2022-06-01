@@ -12,9 +12,8 @@ use yii\widgets\ActiveForm;
     <?php
     $request= Yii::$app->request;
         
-    $id_zapotrzebowania = $request->get('id_zapotrzebowania');
+    $id_zapotrzebowania = $request->get('id');
 
-    $id_opiniujacego = $request->get('id_opiniujacego');
 
     
     ?>
@@ -23,11 +22,11 @@ use yii\widgets\ActiveForm;
     
     
 
-    <?= $form->field($model, 'id_zapotrzebowania')->textInput(['value' => $id_zapotrzebowania]) ?>
+    <?= $form->field($model, 'id_zapotrzebowania')->hiddenInput(['value' => $id_zapotrzebowania])->label(false) ?>
 
-    <?= $form->field($model, 'id_opiniujacego')->textInput(['value' => $id_opiniujacego]) // ['value' => Yii::$app->user->identity->id_opiniujaccego]?>
+    <?= $form->field($model, 'id_opiniujacego')->hiddenInput(['value' => Yii::$app->user->identity->id_opiniujacy])->label(false)?>
 
-    <?= $form->field($model, 'id_user')->textInput() ?>
+    <?= $form->field($model, 'id_user')->hiddenInput(['value' => Yii::$app->user->identity->id])->label(false) ?>
 
     <?= $form->field($model, 'tresc')->textarea(['rows' => 6]) ?>
 

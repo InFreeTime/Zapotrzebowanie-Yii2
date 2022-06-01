@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\RekomendacjeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Rekomendacjes';
+$this->title = 'Rekomendacje';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rekomendacje-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Rekomendacje', ['create'], ['class' => 'btn btn-success']) ?>
+       <!-- <?= Html::a('Dodaj Rekomendacje/ Zatwierdź', ['create'], ['class' => 'btn btn-success']) ?> -->
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'opiniujacyNazwa',
             'tresc:ntext',
             //'rekomendacja',
-            //'data_opiniowania',
+            'data_opiniowania',
 
                        ['class' => 'yii\grid\ActionColumn', 'template'=>'{view}'],
         ],

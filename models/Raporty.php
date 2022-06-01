@@ -65,6 +65,7 @@ class Raporty extends \yii\db\ActiveRecord {
             'status' => 'Status',
             'archiwum' => 'Archiwum',
             'uzytkownicyNazwa' => Yii::t('app', 'Wytworzył'),
+            'dzialyNazwa' => Yii::t('app', 'Dział'),
         ];
     }
 
@@ -89,21 +90,48 @@ class Raporty extends \yii\db\ActiveRecord {
         }
     }
 
+    public function getDzialy() {
+        return $this->hasOne(Dzialy::className(), ['id' => 'id_dzialu']);
+    }
+
+    /* Pobiera nazwę dzialu */
+
+    public function getDzialyNazwa() {
+        if (!empty($this->dzialy->nazwa_dzialu)) {
+            return $this->dzialy->nazwa_dzialu;
+        } else {
+            return null;
+        }
+    }
+
     public function getOpinie() {
         return $this->hasOne(Opinie::className(), ['id_zapotrzebowania' => 'id']);
     }
 
     public function getPrzycisk() {
-
+        /**
+         * Pierwszy warunek sprawdza czy dany przedmiot posiada już jakąś opinie
+         */
+        if (isset($this->opinie->id_zapotrzebowania)) {
+            $zapotrzebowanie = $this->opinie->id_zapotrzebowania;
+        } else {
+            $zapotrzebowanie = 0;
+        }
+        /**
+         * Kolejny krok to wyszukiwanie opini użytkownika zalogowanego. 
+         * Jeżeli opinia istnieje to przycisk "DODAJ" w kolumnie rekomendacje znika
+         */
         $query = Opinie::find()
-                        ->where(['id_zapotrzebowania' => $this->opinie->id_zapotrzebowania])
+                        ->where(['id_zapotrzebowania' => $zapotrzebowanie])
                         ->andWhere(['id_opiniujacego' => Yii::$app->user->identity->id_opiniujacy])->count();
         if ($query == 1) {
             $czy_istnieje = true;
         } else {
             $czy_istnieje = false;
         }
-
+        /**
+         * Sprawdzamy czy uzytkownik jest uprawniony do dodawania opini
+         */
         $j = explode(",", $this->kto_opiniuje);
         if (in_array(Yii::$app->user->identity->id_opiniujacy, $j)) {
             $kto = Yii::$app->user->identity->id_opiniujacy;
@@ -114,8 +142,8 @@ class Raporty extends \yii\db\ActiveRecord {
         $sprawdz_opinie = Html::a('Przeglądaj<span class="glyphicon glyphicon-print"></span>',
                         ['rekomendacje/index', 'id_zapotrzebowania' => $this->id],
                         ['class' => 'btn btn-xs btn-info']);
+        
         if ($kto != 0 && $czy_istnieje != true) {
-
 
             $dodaj_opinie = Html::a('Dodaj <i class="fa fa-plus fa-lg" aria-hidden="true"></i>',
                             ['rekomendacje/create', 'id' => $this->id, 'id_opiniujacego' => $this->kto_opiniuje],
